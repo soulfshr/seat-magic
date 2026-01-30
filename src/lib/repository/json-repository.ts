@@ -10,7 +10,9 @@ import {
   ILayoutRepository,
 } from './interface';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_DIR = process.env.VERCEL
+  ? path.join('/tmp', 'seat-magic-data')
+  : path.join(process.cwd(), 'data');
 
 async function ensureDir() {
   await fs.mkdir(DATA_DIR, { recursive: true });
