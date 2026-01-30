@@ -135,9 +135,9 @@ export function FloorPlan({
             Dining Room
           </text>
 
-          {/* L-shaped bar counter (vertical on left, short side extends right at bottom) */}
+          {/* L-shaped bar counter (vertical on right of bar zone, short leg extends right at bottom) */}
           <path
-            d="M 55 70 L 55 480 L 220 480"
+            d="M 260 70 L 260 480 L 340 480"
             fill="none"
             className="stroke-gray-700"
             strokeWidth={12}
