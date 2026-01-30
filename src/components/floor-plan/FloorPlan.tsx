@@ -12,7 +12,7 @@ import {
   DragOverlay,
 } from '@dnd-kit/core';
 import { Table, Reservation, SeatingSuggestion } from '@/lib/types';
-import { FLOOR_PLAN_WIDTH, FLOOR_PLAN_HEIGHT, BAR_ZONE_WIDTH } from '@/lib/constants';
+import { FLOOR_PLAN_WIDTH, FLOOR_PLAN_HEIGHT, DINING_ZONE_HEIGHT } from '@/lib/constants';
 import { TableDroppable } from './TableDroppable';
 import { TableNode } from './TableNode';
 
@@ -123,21 +123,24 @@ export function FloorPlan({
           className="w-full h-auto"
           style={{ minHeight: 300 }}
         >
-          {/* Bar zone background */}
-          <rect x={0} y={0} width={BAR_ZONE_WIDTH} height={FLOOR_PLAN_HEIGHT} className="fill-amber-50" />
-          <line x1={BAR_ZONE_WIDTH} y1={0} x2={BAR_ZONE_WIDTH} y2={FLOOR_PLAN_HEIGHT} className="stroke-gray-300 stroke-1" strokeDasharray="8 4" />
+          {/* Dining zone background (top) */}
+          <rect x={0} y={0} width={FLOOR_PLAN_WIDTH} height={DINING_ZONE_HEIGHT} className="fill-white" />
+          {/* Bar zone background (bottom) */}
+          <rect x={0} y={DINING_ZONE_HEIGHT} width={FLOOR_PLAN_WIDTH} height={FLOOR_PLAN_HEIGHT - DINING_ZONE_HEIGHT} className="fill-amber-50" />
+          {/* Horizontal divider between zones */}
+          <line x1={0} y1={DINING_ZONE_HEIGHT} x2={FLOOR_PLAN_WIDTH} y2={DINING_ZONE_HEIGHT} className="stroke-gray-300 stroke-1" strokeDasharray="8 4" />
 
           {/* Zone labels */}
-          <text x={BAR_ZONE_WIDTH / 2} y={30} textAnchor="middle" className="text-sm font-semibold fill-gray-400 select-none">
-            Bar & Hightops
-          </text>
-          <text x={(BAR_ZONE_WIDTH + FLOOR_PLAN_WIDTH) / 2} y={30} textAnchor="middle" className="text-sm font-semibold fill-gray-400 select-none">
+          <text x={FLOOR_PLAN_WIDTH / 2} y={30} textAnchor="middle" className="text-sm font-semibold fill-gray-400 select-none">
             Dining Room
+          </text>
+          <text x={FLOOR_PLAN_WIDTH / 2} y={DINING_ZONE_HEIGHT + 25} textAnchor="middle" className="text-sm font-semibold fill-gray-400 select-none">
+            Bar & Hightops
           </text>
 
           {/* L-shaped bar counter (vertical on right of bar zone, short leg extends right at bottom) */}
           <path
-            d="M 260 70 L 260 480 L 340 480"
+            d={`M 260 ${DINING_ZONE_HEIGHT + 30} L 260 ${DINING_ZONE_HEIGHT + 440} L 340 ${DINING_ZONE_HEIGHT + 440}`}
             fill="none"
             className="stroke-gray-700"
             strokeWidth={12}
@@ -145,9 +148,9 @@ export function FloorPlan({
             strokeLinejoin="round"
           />
 
-          {/* Wall dividers at top */}
-          <line x1={10} y1={40} x2={160} y2={40} className="stroke-gray-400 stroke-2" />
-          <line x1={200} y1={40} x2={340} y2={40} className="stroke-gray-400 stroke-2" />
+          {/* Wall dividers at top of bar zone */}
+          <line x1={10} y1={DINING_ZONE_HEIGHT + 5} x2={160} y2={DINING_ZONE_HEIGHT + 5} className="stroke-gray-400 stroke-2" />
+          <line x1={200} y1={DINING_ZONE_HEIGHT + 5} x2={340} y2={DINING_ZONE_HEIGHT + 5} className="stroke-gray-400 stroke-2" />
 
           {/* Tables */}
           {tables.map((table) => {

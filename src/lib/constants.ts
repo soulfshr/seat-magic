@@ -18,18 +18,21 @@ export const DEFAULT_CONFIG: AppConfig = {
 };
 
 // Floor plan dimensions (SVG viewBox units)
-export const FLOOR_PLAN_WIDTH = 1000;
-export const FLOOR_PLAN_HEIGHT = 600;
-export const BAR_ZONE_WIDTH = 350;
+export const FLOOR_PLAN_WIDTH = 900;
+export const FLOOR_PLAN_HEIGHT = 1100;
+export const DINING_ZONE_HEIGHT = 500;
+// Bar zone starts at y = DINING_ZONE_HEIGHT
 
 // Generate default tables
 function makeId(prefix: string, n: number): string {
   return `${prefix}-${String(n).padStart(2, '0')}`;
 }
 
+const BAR_Y = 540; // bar zone vertical offset
+
 export const DEFAULT_TABLES: Table[] = [
-  // === BAR ZONE ===
-  // L-shaped bar counter on right side of bar zone, seats on left of counter
+  // === BAR ZONE (bottom half, y starts at BAR_Y) ===
+  // L-shaped bar counter on right side, seats on left of counter
   // Vertical segment seats (facing left toward hightops)
   ...Array.from({ length: 6 }, (_, i): Table => ({
     id: makeId('bar', i + 1),
@@ -40,7 +43,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 1,
     defaultCovers: 1,
-    position: { x: 225, y: 120 + i * 60 },
+    position: { x: 225, y: BAR_Y + 80 + i * 60 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -57,7 +60,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 1,
     defaultCovers: 1,
-    position: { x: 250 + i * 28, y: 520 },
+    position: { x: 250 + i * 28, y: BAR_Y + 480 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -75,7 +78,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 4,
     defaultCovers: 4,
-    position: { x: 90, y: 110 },
+    position: { x: 90, y: BAR_Y + 70 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -84,7 +87,6 @@ export const DEFAULT_TABLES: Table[] = [
   },
 
   // 4 rectangular 2-top hightops (left column, stacked vertically)
-  // HT 1: below round table
   {
     id: 'ht-01',
     zone: 'bar',
@@ -94,14 +96,13 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 220 },
+    position: { x: 90, y: BAR_Y + 180 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
     priorityRank: 5,
     isBarSeat: false,
   },
-  // HT 2 & HT 3: two 2-tops pushed together (middle area)
   {
     id: 'ht-02',
     zone: 'bar',
@@ -111,7 +112,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 305 },
+    position: { x: 90, y: BAR_Y + 265 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -127,14 +128,13 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 360 },
+    position: { x: 90, y: BAR_Y + 320 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
     priorityRank: 5,
     isBarSeat: false,
   },
-  // HT 4: bottom-left
   {
     id: 'ht-04',
     zone: 'bar',
@@ -144,7 +144,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 460 },
+    position: { x: 90, y: BAR_Y + 420 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -152,8 +152,8 @@ export const DEFAULT_TABLES: Table[] = [
     isBarSeat: false,
   },
 
-  // === DINING ROOM ===
-  // 3 six-seater booths (fixed)
+  // === DINING ROOM (top half, y: 0–500) ===
+  // 3 six-seater booths (fixed) — left column
   ...Array.from({ length: 3 }, (_, i): Table => ({
     id: makeId('booth', i + 1),
     zone: 'dining',
@@ -163,7 +163,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 2,
     maxCovers: 6,
     defaultCovers: 6,
-    position: { x: 420, y: 80 + i * 140 },
+    position: { x: 120, y: 80 + i * 140 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -171,7 +171,7 @@ export const DEFAULT_TABLES: Table[] = [
     isBarSeat: false,
   })),
 
-  // 6 rectangular 2-tops (movable, combinable)
+  // 6 rectangular 2-tops (movable, combinable) — center area
   ...Array.from({ length: 6 }, (_, i): Table => ({
     id: makeId('dt', i + 1),
     zone: 'dining',
@@ -181,7 +181,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 560 + (i % 3) * 100, y: 100 + Math.floor(i / 3) * 160 },
+    position: { x: 350 + (i % 3) * 110, y: 100 + Math.floor(i / 3) * 160 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -189,7 +189,7 @@ export const DEFAULT_TABLES: Table[] = [
     isBarSeat: false,
   })),
 
-  // 2 eight-tops (movable)
+  // 2 eight-tops (movable) — right side
   ...Array.from({ length: 2 }, (_, i): Table => ({
     id: makeId('lg', i + 1),
     zone: 'dining',
@@ -199,7 +199,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 4,
     maxCovers: 8,
     defaultCovers: 8,
-    position: { x: 880, y: 120 + i * 200 },
+    position: { x: 760, y: 120 + i * 200 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
