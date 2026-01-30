@@ -29,8 +29,8 @@ function makeId(prefix: string, n: number): string {
 
 export const DEFAULT_TABLES: Table[] = [
   // === BAR ZONE ===
-  // L-shaped bar counter: 6 seats along the right (vertical) side, 6 along the bottom (horizontal)
-  // Right side of bar (vertical, seats face left)
+  // L-shaped bar counter: 6 seats along left (vertical) side, 6 along bottom (short side extends right)
+  // Left side of bar (vertical, seats face right toward hightops)
   ...Array.from({ length: 6 }, (_, i): Table => ({
     id: makeId('bar', i + 1),
     zone: 'bar',
@@ -40,14 +40,14 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 1,
     defaultCovers: 1,
-    position: { x: 260, y: 120 + i * 45 },
+    position: { x: 90, y: 120 + i * 60 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
     priorityRank: 10,
     isBarSeat: true,
   })),
-  // Bottom of bar (horizontal, seats face up)
+  // Bottom of bar (horizontal, short side extending right)
   ...Array.from({ length: 6 }, (_, i): Table => ({
     id: makeId('bar', i + 7),
     zone: 'bar',
@@ -57,7 +57,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 1,
     defaultCovers: 1,
-    position: { x: 140 + i * 30, y: 520 },
+    position: { x: 80 + i * 28, y: 520 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -65,7 +65,7 @@ export const DEFAULT_TABLES: Table[] = [
     isBarSeat: true,
   })),
 
-  // Round 4-top hightop (top-left area)
+  // Round 4-top hightop (top-right area of bar zone)
   {
     id: 'ht-05',
     zone: 'bar',
@@ -75,7 +75,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 4,
     defaultCovers: 4,
-    position: { x: 90, y: 110 },
+    position: { x: 250, y: 110 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -83,7 +83,7 @@ export const DEFAULT_TABLES: Table[] = [
     isBarSeat: false,
   },
 
-  // 4 rectangular 2-top hightops (left column, stacked vertically)
+  // 4 rectangular 2-top hightops (right column, stacked vertically)
   // HT 1: below round table
   {
     id: 'ht-01',
@@ -94,7 +94,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 220 },
+    position: { x: 250, y: 220 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -111,7 +111,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 305 },
+    position: { x: 250, y: 305 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
@@ -127,14 +127,14 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 360 },
+    position: { x: 250, y: 360 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,
     priorityRank: 5,
     isBarSeat: false,
   },
-  // HT 4: bottom-left
+  // HT 4: bottom-right of bar zone
   {
     id: 'ht-04',
     zone: 'bar',
@@ -144,7 +144,7 @@ export const DEFAULT_TABLES: Table[] = [
     minCovers: 1,
     maxCovers: 2,
     defaultCovers: 2,
-    position: { x: 90, y: 460 },
+    position: { x: 250, y: 460 },
     rotation: 0,
     combinedWith: null,
     combinationGroupId: null,

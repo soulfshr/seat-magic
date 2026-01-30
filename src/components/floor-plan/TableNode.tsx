@@ -46,10 +46,17 @@ export function TableNode({ table, reservation, isOver, isDragging, suggestion, 
 
       {/* Seats */}
       {!table.isBarSeat && Array.from({ length: table.defaultCovers }).map((_, i) => {
-        const angle = (i / table.defaultCovers) * Math.PI * 2 - Math.PI / 2;
-        const radius = Math.max(w, h) / 2 + 10;
-        const sx = Math.cos(angle) * radius;
-        const sy = Math.sin(angle) * radius;
+        let sx: number, sy: number;
+        if (table.defaultCovers === 2) {
+          // 2-top: seats on left and right (short sides)
+          sx = i === 0 ? -(w / 2 + 10) : (w / 2 + 10);
+          sy = 0;
+        } else {
+          const angle = (i / table.defaultCovers) * Math.PI * 2 - Math.PI / 2;
+          const radius = Math.max(w, h) / 2 + 10;
+          sx = Math.cos(angle) * radius;
+          sy = Math.sin(angle) * radius;
+        }
         return <circle key={i} cx={sx} cy={sy} r={5} className="fill-gray-200 stroke-gray-400 stroke-1" />;
       })}
 
